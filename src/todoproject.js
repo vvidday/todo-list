@@ -11,6 +11,11 @@ const toDoProject = (name) =>{
         item_list.push(item);
     }
 
+    //Public method that removes a todo item based on index and returns it.
+    const removeItem = (index) =>{
+        return item_list.splice(index, 1);
+    }
+
     //Public getter method that returns list of all items in this project
     const getItems = () => item_list;
 
@@ -19,6 +24,7 @@ const toDoProject = (name) =>{
 
     return{
         addItem,
+        removeItem,
         getItems,
         getName,
     }

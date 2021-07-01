@@ -4,13 +4,21 @@ import { toDoItem } from "./todoitem";
 // Function to add projects to localstorage
 const addToStorage = (project)  => {
     let primaryData = [project.getName(), []];
-    // const projectItems = project.getItems();
-    // for (let i = 0; i < projectItems.length; i++){
-    //     primaryData[1].push([projectItems[i].getTitle(), projectItems[i].getDescription(), projectItems[i].getDueDate(), projectItems[i].getPriority()]);
-    // }
     let arr = getRawStorage();
     arr.push(primaryData);
     addRaw(arr);
+}
+
+// Function to remove project from localstorage
+const removeFromStorage = (project) => {
+    let raw = getRawStorage();
+    for(let i = 0; i < raw.length; i++){
+        if(raw[i][0] == project.getName()){
+            raw.splice(i, 1);
+            break;
+        }
+    }
+    addRaw(raw);
 }
 
 //Function to update localstorage when a new item is added to a project.
@@ -18,12 +26,25 @@ const updateStorage = (item, project, action) => {
     const to_insert = [item.getTitle(), item.getDescription(), item.getDueDate(), item.getPriority()];
     const name = project.getName();
     let raw = getRawStorage();
+
+    function compareArrays(arr1, arr2){
+        if (arr1.length !=  arr2.length) return false;
+        for(let i = 0; i < arr1.length; i++){
+            if(arr1[i] != arr2[i]) return false;
+        }
+        return true;
+    }
+
     for(let i = 0; i < raw.length; i++){
         if(name == raw[i][0]){
-            console.log("got here");
             if(action === 'add') raw[i][1].push(to_insert);
             else{
-                raw[i][1].splice(raw[i][1].indexOf(to_insert), 1);
+                for (let j = 0; j < raw[i][1].length; j++){
+                    if(compareArrays(raw[i][1][j], to_insert)){
+                        raw[i][1].splice(j, 1);
+                        break;
+                    }
+                }
             }
             break;
         }
@@ -53,7 +74,6 @@ const addRaw = (arr) => {
 // Function to retrieve all projects in localstorage as toDoProject objects.
 const getStorageProjects = () => {
     const raw = getRawStorage();
-    console.log(raw);
     if (raw == []) return [];
     let result = [];
 
@@ -75,4 +95,4 @@ const getStorageProjects = () => {
     return result;
 }
 
-export {addToStorage, resetStorage, getStorageProjects, updateStorage};
+export {addToStorage, resetStorage, getStorageProjects, updateStorage, removeFromStorage};

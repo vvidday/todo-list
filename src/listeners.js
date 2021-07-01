@@ -1,17 +1,16 @@
 import './style.css';
 import { toDoProject } from './todoproject';
 import { toDoItem } from './todoitem';
-import { addToNav, displayProj, getCurrentProject } from './domhandler';
-import { addToStorage, updateStorage } from './storagehandler';
+import { addToNav, displayProj, getCurrentProject, clearInputFields, toggleNavBar, removeProj } from './domhandler';
+import { addToStorage, updateStorage, removeFromStorage } from './storagehandler';
 
 // Listener that creates a new project.
 function newProjectListener(name){
-    console.log(name);
     const newProject = toDoProject(name);
-    // Display new project on current screen
-    displayProj(newProject);
     // Add project to navbar.
     addToNav(newProject);
+    // Display new project on current screen
+    displayProj(newProject);    
     // Add new todoproject object to localStorage, so it can be retrieved later.
     addToStorage(newProject);
 }
@@ -33,5 +32,32 @@ function navListener(project){
     if(project != getCurrentProject()) displayProj(project);
 }
 
+// Collapsible listener
+function collapsibleListener(){
+    const content = this.nextElementSibling.nextElementSibling;
+    if(!content.style['max-height']) {
+        content.style['max-height'] = content.scrollHeight + "px";
+    }
+    else content.style['max-height'] = null;
+}
 
-export {newProjectListener, newItemListener, navListener};
+// Nav Button listener (expands)
+function navButtonListener(){
+    const nav = document.getElementById("navbar");
+    if(nav.style["max-width"] != "20%"){
+        toggleNavBar("show", nav);
+    }
+    else toggleNavBar("hide", nav);
+    
+}
+
+function removeProjectListener(project){
+    //Remove from body & nav
+    removeProj(project);
+    
+    //Remove from storage
+    removeFromStorage(project);
+}
+
+
+export {newProjectListener, newItemListener, navListener, collapsibleListener, navButtonListener, removeProjectListener  };
