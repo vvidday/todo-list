@@ -1,8 +1,6 @@
 import './style.css';
 import { navListener, collapsibleListener } from './listeners';
-import high from './images/high.svg';
-import med from './images/medium.svg';
-import small from './images/small.svg';
+import menu from './images/menu.svg';
 import red from './images/red.png';
 import yellow from './images/yellow.png';
 import green from './images/green.png';
@@ -183,4 +181,12 @@ const removeProj = (project) => {
 }
 
 
-export{ displayProj, getCurrentProject, addToNav, clearInputFields, toggleNavBar, removeProj };
+//add menu image
+const addMenuImage = () => {
+    const menuImg = new Image();
+    menuImg.src = menu;
+    document.getElementById("nav-button").appendChild(menuImg);
+}
+
+
+export{ displayProj, getCurrentProject, addToNav, clearInputFields, toggleNavBar, removeProj, addMenuImage };

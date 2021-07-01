@@ -1,11 +1,12 @@
 import './style.css';
 import { newProjectListener, newItemListener, navListener, navButtonListener, removeProjectListener } from './listeners';
-import { displayProj, addToNav, getCurrentProject, clearInputFields } from './domhandler';
+import { displayProj, addToNav, getCurrentProject, clearInputFields, addMenuImage } from './domhandler';
 import { getStorageProjects } from './storagehandler';
 
 
 //Page Load Function
 const onPageLoad = () => {
+    addMenuImage();
     // Retrieve projects from storage
     const projects = getStorageProjects();
     if(projects.length > 0){

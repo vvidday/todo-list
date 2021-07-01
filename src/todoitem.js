@@ -5,6 +5,7 @@ import './style.css';
 //input: title(string), description(string), duedate (UNDECIDED - use module?), priority(string - low/med/high)
 const toDoItem = (title, description, duedate, priority) =>{
 
+    //Getters.
     const getTitle = () => title;
     const getDescription = () => description;
     const getDueDate = () => duedate;
